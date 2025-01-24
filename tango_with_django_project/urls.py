@@ -22,6 +22,10 @@ from django.urls import include
 #Pg34 TwD
 from rango import views
 
+#Pg60 TwD
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     #Pg35 TwD
     path('', views.index, name='index'),
@@ -31,4 +35,5 @@ urlpatterns = [
     path('rango/', include('rango.urls')),
 
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#Pg60 TwD
