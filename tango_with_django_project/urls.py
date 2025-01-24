@@ -16,6 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+#Pg35 TwD
+from django.urls import include
+
+#Pg34 TwD
+from rango import views
+
 urlpatterns = [
+    #Pg35 TwD
+    path('', views.index, name='index'),
+
+    #Pg35 TwD
+    #Any url that starts with rango/ will be handled by rango
+    path('rango/', include('rango.urls')),
+
     path('admin/', admin.site.urls),
 ]
