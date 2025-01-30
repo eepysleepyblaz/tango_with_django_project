@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+#Pg67 TwD
+#To ignore the database files
+db.sqlite3
