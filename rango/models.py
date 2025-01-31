@@ -1,5 +1,8 @@
 from django.db import models
 
+#Pg97 TwD
+from django.template.defaultfilters import slugify
+
 # Create your models here.
 
 #Pg68 TwD
@@ -9,6 +12,13 @@ class Category(models.Model):
     #Pg87 Twd
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
+
+    #Pg 97
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     #Pg78 TwD
     class Meta:
