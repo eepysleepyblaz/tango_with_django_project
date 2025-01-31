@@ -1,12 +1,19 @@
 from django.shortcuts import render
 
+#Pg92 TwD
+from rango.models import Category
 
 #Pg34 TwD
 from django.http import HttpResponse
 
 def index(request):
-    #Pg48 TwD
-    context_dict = {'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!'}
+    #Pg92 TwD
+    category_list = Category.objects.order_by('-likes')[:5]
+
+    context_dict = {}
+    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['categories'] = category_list
+
     return render(request, 'rango/index.html', context=context_dict)
 
 #Pg40 TwD
