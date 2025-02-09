@@ -15,5 +15,8 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
 
     #Pg126 TwD
-    path('category/<slug:category_name_slug>/add_page/', views.add_page, name='add_page')
+    path('category/<slug:category_name_slug>/add_page/', views.add_page, name='add_page'),
+
+    #Pg161 TwD
+    path('register/', views.register, name='register'),
 ]
