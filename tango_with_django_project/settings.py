@@ -137,3 +137,6 @@ STATIC_URL = '/static/'
 
 #Pg52 TwD
 STATICFILES_DIRS = [STATIC_DIR]
+
+#Pg171 TwD
+LOGIN_URL = 'rango:login'

@@ -19,4 +19,13 @@ urlpatterns = [
 
     #Pg161 TwD
     path('register/', views.register, name='register'),
+
+    #Pg167 TwD
+    path('login/', views.user_login, name='login'),
+
+    #Pg170 TwD
+    path('restricted/', views.restricted, name='restricted'),
+
+    #Pg172 TwD
+    path('logout/', views.user_logout, name='logout'),
 ]

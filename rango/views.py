@@ -20,8 +20,15 @@ from django.shortcuts import redirect
 #Pg34 TwD
 from django.http import HttpResponse
 
+#Pg172 TwD
+from django.contrib.auth import authenticate, login, logout
+
+#Pg170 TwD
+from django.contrib.auth.decorators import login_required
+
 #Pg157 TwD
 from rango.forms import UserForm, UserProfileForm
+
 
 def index(request):
     #Pg92 TwD
@@ -139,3 +146,35 @@ def register(request):
                   context = {'user_form': user_form,
                              'profile_form': profile_form,
                              'registered': registered})
+
+#Pg164 TwD
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('rango:index'))
+            else:
+                return HttpResponse("Your Rango account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    
+    else:
+        return render(request, 'rango/login.html')
+    
+#Pg170
+@login_required
+def restricted(request):
+    return HttpResponse("Since you are logged in, you can see this text!")
+
+#Pg172
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('rango:index'))
