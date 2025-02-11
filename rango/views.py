@@ -29,6 +29,9 @@ from django.contrib.auth.decorators import login_required
 #Pg157 TwD
 from rango.forms import UserForm, UserProfileForm
 
+#Pg185 TwD
+from datetime import datetime
+
 
 def index(request):
     #Pg92 TwD
@@ -39,13 +42,21 @@ def index(request):
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
     context_dict['pages'] = page_list
+    
+    #Pg186 TwD
+    context_dict['visits'] = int(request.COOKIES.get('visits', '1'))
 
-    return render(request, 'rango/index.html', context=context_dict)
+    #Pg185-186 TwD
+    response = render(request, 'rango/index.html', context=context_dict)
+
+    visitor_cookie_handler(request, response)
+    return response
 
 #Pg40 TwD
 def about(request):
     #Pg63 TwD
     context_dict = {'boldmessage': 'This tutorial has been put together by Sandy'}
+    
     return render(request, 'rango/about.html', context=context_dict)
 
 
@@ -180,3 +191,18 @@ def restricted(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('rango:index'))
+
+#Pg184 TwD
+def visitor_cookie_handler(request, responce):
+    visits = int(request.COOKIE.get('visits', '1'))
+
+    last_visit_cookie = request.COOKIE.get('last_visit', str(datetime.now))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
+
+    if (datetime.now() - last_visit_time).days > 0:
+        visits = visits + 1
+        responce.set_cookie('last_visit', str(datetime.now()))
+    else:
+        responce.set_cookie('last_visit', last_visit_cookie)
+    
+    responce.set_cookie('visits', visits)
